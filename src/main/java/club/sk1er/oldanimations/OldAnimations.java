@@ -2,15 +2,13 @@ package club.sk1er.oldanimations;
 
 import club.sk1er.oldanimations.command.OldAnimationsCommand;
 import club.sk1er.oldanimations.config.OldAnimationsSettings;
+import club.sk1er.oldanimations.installer.ModCoreInstaller;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.modcore.api.ModCoreAPI;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(modid = OldAnimations.MODID, name = "Sk1er Old Animations", version = OldAnimations.VERSION)
 public class OldAnimations {
@@ -21,7 +19,8 @@ public class OldAnimations {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        ModCoreAPI.getCommandRegistry().registerCommand(new OldAnimationsCommand());
+        ModCoreInstaller.initializeModCore(Minecraft.getMinecraft().mcDataDir);
+        ClientCommandHandler.instance.registerCommand(new OldAnimationsCommand());
         oldAnimationsSettings = new OldAnimationsSettings();
         oldAnimationsSettings.preload();
 
