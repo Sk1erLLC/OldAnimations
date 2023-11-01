@@ -1,7 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.5.0" apply false
-    id("fabric-loom") version "0.4-SNAPSHOT" apply false
-    id("com.replaymod.preprocess") version "f64d217"
+    kotlin("jvm") version "1.9.20" apply false
+    id("gg.essential.multi-version.root")
 }
 
 // Loom tries to find the active mixin version by recursing up to the root project and checking each project's
@@ -10,5 +9,5 @@ plugins {
 configurations.register("compileClasspath")
 
 preprocess {
-    "1.8.9"(10809, "srg")
+    val forge10809 = createNode("1.8.9-forge", 10809, "srg")
 }

@@ -2,35 +2,27 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        jcenter()
         mavenCentral()
-        google()
-        maven("https://jitpack.io")
         maven("https://maven.fabricmc.net")
-        flatDir {
-                dirs=setOf(file("../../libs"))
-        }
+        maven("https://maven.architectury.dev/")
+        maven("https://maven.minecraftforge.net")
+        maven("https://repo.essential.gg/repository/maven-public")
     }
-    resolutionStrategy {
-        eachPlugin {
-            when (requested.id.id) {
-                "com.replaymod.preprocess" -> {
-                    useModule("com.github.replaymod:preprocessor:${requested.version}")
-                }
-            }
-        }
+    plugins {
+        val egtVersion = "0.3.0"
+        id("gg.essential.multi-version.root") version egtVersion
     }
 }
 
 rootProject.buildFileName = "root.gradle.kts"
 
 listOf(
-    "1.8.9"
+    "1.8.9-forge"
 ).forEach { version ->
     include(":$version")
     project(":$version").apply {
         projectDir = file("versions/$version")
-        buildFileName = "../../build.gradle"
+        buildFileName = "../../build.gradle.kts"
     }
 
 }
