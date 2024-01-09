@@ -18,7 +18,6 @@ loom {
     }
     runConfigs {
         getByName("client") {
-            property("fml.coreMods.load", "club.sk1er.oldanimations.loader.AnimationsTweak")
             property("patcher.debugBytecode", "true")
             property("mixin.debug.verbose", "true")
             property("mixin.debug.export", "true")
@@ -60,7 +59,7 @@ tasks.jar {
     manifest.attributes(mapOf(
         "ModSide" to "CLIENT",
         "FMLCorePluginContainsFMLMod" to "Yes, yes it does",
-        "TweakClass" to "club.sk1er.oldanimations.loader.AnimationsTweak",
+        "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker",
         "TweakOrder" to "0",
         "MixinConfigs" to "mixins.oldanimations.json"
     ))
