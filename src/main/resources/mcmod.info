@@ -4,7 +4,7 @@
     "name": "Sk1er Old Animations",
     "description": "Replace animations & visuals removed in 1.8 with their old 1.7 visuals.",
     "version": "${version}",
-    "mcversion": "${mcversion}",
+    "mcversion": "${mcVersionStr}",
     "url": "",
     "updateUrl": "",
     "authorList": [
