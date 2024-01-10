@@ -10,11 +10,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemCloth;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -134,7 +130,9 @@ public class AnimationHandler {
                 if (!OldAnimationsSettings.oldSwordBlock) return true;
                 break;
             case NONE:
-                if (!OldAnimationsSettings.oldModel) return true;
+                if (stack.getItem() instanceof ItemFishingRod && OldAnimationsSettings.oldRod) {
+                    // no-op to perform transforms
+                } else if (!OldAnimationsSettings.oldModel) return true;
         }
 
         GlStateManager.translate(0.58800083f, 0.36999986f, -0.77000016f);
