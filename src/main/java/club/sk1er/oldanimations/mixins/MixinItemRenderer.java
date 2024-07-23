@@ -56,7 +56,7 @@ public class MixinItemRenderer {
     private ItemCameraTransforms.TransformType renderItem(ItemCameraTransforms.TransformType transform) {
         if (itemToRender == null) return transform;
 
-        if (this.itemToRender.getItem().shouldRotateAroundWhenRendering()) {
+        if (this.itemToRender.getItem().shouldRotateAroundWhenRendering() && (OldAnimationsSettings.oldModel || OldAnimationsSettings.oldRod)) {
             GlStateManager.rotate(180f, 0f, 1f, 0f);
         }
 
