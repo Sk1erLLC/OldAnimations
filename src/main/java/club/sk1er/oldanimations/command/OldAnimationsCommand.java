@@ -1,30 +1,35 @@
 package club.sk1er.oldanimations.command;
 
 import club.sk1er.oldanimations.OldAnimations;
-import gg.essential.api.commands.Command;
-import gg.essential.api.commands.DefaultHandler;
-import gg.essential.api.utils.GuiUtil;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
-public class OldAnimationsCommand extends Command {
-    public OldAnimationsCommand() {
-        super("oldanimations");
-    }
+public class OldAnimationsCommand extends CommandBase {
 
-    @Nullable
     @Override
-    public Set<Alias> getCommandAliases() {
-        Set<Alias> aliases = new HashSet<>();
-        aliases.add(new Alias("oam", false));
-        return aliases;
+    public String getCommandName() {
+        return "oldanimations";
     }
 
-    @DefaultHandler
-    public void handle() {
-        GuiUtil.open(Objects.requireNonNull(OldAnimations.oldAnimationsSettings.gui()));
+    @Override
+    public String getCommandUsage(ICommandSender sender) {
+        return "oldanimations";
+    }
+
+    @Override
+    public void processCommand(ICommandSender sender, String[] args) {
+        OldAnimations.screen = OldAnimations.oldAnimationsSettings.gui();
+    }
+
+    @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("oam");
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return 0;
     }
 }
