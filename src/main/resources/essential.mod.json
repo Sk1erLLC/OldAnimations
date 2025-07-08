@@ -1,0 +1,7 @@
+{
+  "id": "your_mod_id_goes_here",
+  "version": "${version}",
+  "jars": [
+    ${jars.get()}
+  ]
+}

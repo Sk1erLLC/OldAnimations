@@ -29,6 +29,7 @@ loom {
 }
 
 repositories {
+    mavenLocal()
     maven("https://repo.essential.gg/repository/maven-public/")
     maven("https://repo.spongepowered.org/repository/maven-public/")
 }
@@ -36,11 +37,17 @@ repositories {
 val embed by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
 
-dependencies {
-    compileOnly("gg.essential:essential-$platform:14451+g9be7c2d957")
-    embed("gg.essential:loader-launchwrapper:1.2.2")
+val jij by configurations.creating
+configurations.implementation.get().extendsFrom(jij)
 
-    compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
+dependencies {
+    embed("gg.essential:loader-launchwrapper:1.3.0")
+
+    jij("gg.essential:mixin:0.1.0+mixin.0.8.4")
+    jij(annotationProcessor("gg.essential.lib:mixinextras:0.4.0")!!)
+
+    jij("gg.essential:vigilance:306")
+    jij(modImplementation("gg.essential:universalcraft-${platform.mcVersionStr}-${platform.loaderStr}:419")!!)
 }
 
 tasks.compileKotlin {
@@ -50,10 +57,32 @@ tasks.compileKotlin {
 }
 
 tasks.processResources {
-    rename("(.+_at.cfg)", "META-INF/$1")
+    val expansions = mapOf(
+        "version" to version,
+        "jars" to provider {
+            jij.resolvedConfiguration.resolvedArtifacts.joinToString(",\n") { artifact ->
+                val id = artifact.moduleVersion.id
+                """
+                    {
+                        "id": "${id.group}:${id.name}",
+                        "version": "${id.version}",
+                        "file": "META-INF/jars/${artifact.file.name}"
+                    }
+                """.trimIndent()
+            }
+        },
+    )
+    inputs.property("expansions", expansions)
+    filesMatching("essential.mod.json") {
+        expand(expansions)
+    }
 }
 
 tasks.jar {
+    dependsOn(jij)
+    from(jij.files) {
+        into("META-INF/jars")
+    }
     from(embed.files.map { zipTree(it) })
 
     manifest.attributes(mapOf(
