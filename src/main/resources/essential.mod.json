@@ -1,5 +1,5 @@
 {
-  "id": "your_mod_id_goes_here",
+  "id": "sk1er_old_animations",
   "version": "${version}",
   "jars": [
     ${jars.get()}
